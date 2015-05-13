@@ -27,10 +27,12 @@ function onEffectTick(target,effect)
 		-- curse II also known as "zombie"
 		if (not(target:hasStatusEffect(EFFECT_DISEASE)) and target:hasStatusEffect(EFFECT_PLAGUE) == false and target:hasStatusEffect(EFFECT_CURSE_II) == false) then
 			if (target:getContinentID() == 1 and target:hasStatusEffect(EFFECT_SIGNET)) then
-				target:addHP(10+(3*math.floor(target:getMainLvl()/10))+(healtime-2)*(1+math.floor(target:getMaxHP()/300))+(target:getMod(MOD_HPHEAL)));
+				-- target:addHP(10+(3*math.floor(target:getMainLvl()/10))+(healtime-2)*(1+math.floor(target:getMaxHP()/300))+(target:getMod(MOD_HPHEAL)));
+				target:addHP((math.floor(target:getMaxHP()/5))+(target:getMod(MOD_HPHEAL)));
 			else
 				target:setTP(target:getTP()-10);
-				target:addHP(10+(healtime-2)+(target:getMod(MOD_HPHEAL)));
+				-- target:addHP(10+(healtime-2)+(target:getMod(MOD_HPHEAL)));
+				target:addHP((math.floor(target:getMaxHP()/5))+(target:getMod(MOD_HPHEAL)));
 			end
          -- Each rank of Clear Mind provides +3 hMP (via MOD_MPHEAL)
          -- Each tic of healing should be +1mp more than the last
