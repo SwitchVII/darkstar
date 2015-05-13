@@ -1,0 +1,28 @@
+C:
+cd C:\Program Files\MySQL\MySQL Server 5.6\bin
+
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb auction_house > "D:\Programs\DarkStar\Backups\auction_house.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb accounts > "D:\Programs\DarkStar\Backups\accounts.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb accounts_banned > "D:\Programs\DarkStar\Backups\accounts_banned.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_effects > "D:\Programs\DarkStar\Backups\char_effects.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_equip > "D:\Programs\DarkStar\Backups\char_equip.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_exp > "D:\Programs\DarkStar\Backups\char_exp.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_inventory > "D:\Programs\DarkStar\Backups\char_inventory.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_jobs > "D:\Programs\DarkStar\Backups\char_jobs.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_look > "D:\Programs\DarkStar\Backups\char_look.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_pet > "D:\Programs\DarkStar\Backups\char_pet.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_pet_name > "D:\Programs\DarkStar\Backups\char_pet_name.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_points > "D:\Programs\DarkStar\Backups\char_points.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_profile > "D:\Programs\DarkStar\Backups\char_profile.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_skills > "D:\Programs\DarkStar\Backups\char_skills.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_stats > "D:\Programs\DarkStar\Backups\char_stats.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_storage > "D:\Programs\DarkStar\Backups\char_storage.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_style > "D:\Programs\DarkStar\Backups\char_style.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_vars > "D:\Programs\DarkStar\Backups\char_vars.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_weapon_skill_points > "D:\Programs\DarkStar\Backups\char_weapon_skill_points.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb chars > "D:\Programs\DarkStar\Backups\chars.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb conquest_system > "D:\Programs\DarkStar\Backups\conquest_system.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb delivery_box > "D:\Programs\DarkStar\Backups\delivery_box.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb linkshells > "D:\Programs\DarkStar\Backups\linkshells.sql"
+
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb > "D:\Programs\DarkStar\Backups\dspdb.sql"
