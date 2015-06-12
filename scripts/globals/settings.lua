@@ -42,7 +42,7 @@ OPENING_CUTSCENE_ENABLE = 0; --Set to 1 to enable opening cutscenes, 0 to disabl
 SUBJOB_QUEST_LEVEL = 18; -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
 ADVANCED_JOB_LEVEL = 30; -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
 ALL_MAPS = 1; -- Set to 1 to give starting characters all the maps.
-UNLOCK_OUTPOST_WARPS = 2; -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+UNLOCK_OUTPOST_WARPS = 1; -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
 
 SHOP_PRICE = 1.000; -- Multiplies prices in NPC shops.
 GIL_RATE   = 1.000; -- Multiplies gil earned from quests.  Won't always display in game.
@@ -60,7 +60,7 @@ BLUE_POWER  = 1.000; -- Multiplies damage dealt by most Blue Magic.
 DRAIN_POWER = 1.000; -- Multiplies amount drained by Drain, Aspir, and relevant Blue Magic spells.
 ITEM_POWER  = 1.000; -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000; -- Multiplies damage dealt by Weapon Skills.
-WEAPON_SKILL_POINTS = 1.000; -- Multiplies points earned during weapon unlocking.
+WEAPON_SKILL_POINTS = 4.000; -- Multiplies points earned during weapon unlocking.
 USE_ADOULIN_WEAPON_SKILL_CHANGES = false; -- true/false. Change to toggle new Adoulin weapon skill damage calculations
 
 HARVESTING_BREAK_CHANCE = 0.33; -- % chance for the sickle to break during harvesting.  Set between 0 and 1.
@@ -91,11 +91,11 @@ LandKingSystem_HQ = 2;
      CURRENCY_EXCHANGE_RATE = 100;      -- X Tier 1 ancient currency -> 1 Tier 2, and so on.  Certain values may conflict with shop items.  Not designed to exceed 198.
 RELIC_2ND_UPGRADE_WAIT_TIME = 604800;      -- wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 604800s = 1 RL week.
 RELIC_3RD_UPGRADE_WAIT_TIME = 295200;      -- wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 295200s = 82 hours.
-FREE_COP_DYNAMIS = 1 ; -- Authorize player to entering inside COP Dynamis without completing COP mission ( 1 = enable 0= disable)
+FREE_COP_DYNAMIS = 0 ; -- Authorize player to entering inside COP Dynamis without completing COP mission ( 1 = enable 0= disable)
 
 -- QUEST/MISSION SPECIFIC SETTINGS
-WSNM_LEVEL = 70; -- Min Level to get WSNM Quests
-WSNM_SKILL_LEVEL = 240;
+WSNM_LEVEL = 71; -- Min Level to get WSNM Quests
+WSNM_SKILL_LEVEL = 230;
 AF1_QUEST_LEVEL = 40; -- Minimum level to start AF1 quest
 AF2_QUEST_LEVEL = 50; -- Minimum level to start AF2 quest
 AF3_QUEST_LEVEL = 50; -- Minimum level to start AF3 quest
@@ -106,12 +106,12 @@ DEBUG_MODE = 0; -- Set to 1 to activate auto-warping to the next location (only 
 QM_RESET_TIME = 300; -- Default time (in seconds) you have from killing ???-pop mission NMs to click again and get key item, until ??? resets.
 OldSchoolG1 = true; -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
 OldSchoolG2 = true; -- Set true to require the NMs for "Atop the Highest Mountains" be dead to get KI like before SE changed it.
-FrigiciteDuration = 30; -- When OldSChoolG2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the "???" target.
+FrigiciteDuration = 300; -- When OldSChoolG2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the "???" target.
 
 -- FIELDS OF VALOR/Grounds of Valor SETTINGS
 REGIME_WAIT = 0; --Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
 FIELD_MANUALS = 1; -- Enables Fields of Valor manuals
-LOW_LEVEL_REGIME = 1; --Allow people to kill regime targets even if they give no exp, allowing people to farm regime targets at 75 in low level areas.
+LOW_LEVEL_REGIME = 0; --Allow people to kill regime targets even if they give no exp, allowing people to farm regime targets at 75 in low level areas.
 GROUNDS_TOMES = 1; -- Enables Grounds of Valor tomes
 
 -- JOB ABILITY/TRAIT SPECIFIC SETTINGS
