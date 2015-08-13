@@ -216,6 +216,7 @@ enum MODIFIER
     MOD_MOVE                      = 0xA9,  // % Movement Speed (modId = 169)
     MOD_FASTCAST                  = 0xAA,  // Increases Spell Cast Time (TRAIT) (modId = 170)
     MOD_UFASTCAST                 = 0x197, // uncapped fast cast (modId = 407)
+    MOD_CURE_CAST_TIME            = 0x207, // cure cast time reduction (modId = 519)
     MOD_DELAY                     = 0xAB,  // Increase/Decrease Delay (modId = 171)
     MOD_RANGED_DELAY              = 0xAC,  // Increase/Decrease Ranged Delay (modId = 172)
     MOD_MARTIAL_ARTS              = 0xAD,  // The integer amount of delay to reduce from H2H weapons' base delay. (TRAIT) (modId = 173)
@@ -308,6 +309,7 @@ enum MODIFIER
     MOD_STEAL                     = 0x12A, // Increase/Decrease THF Steal chance (modId = 298)
     MOD_TRIPLE_ATTACK             = 0x12E, // Percent chance (modId = 302)
     MOD_TREASURE_HUNTER           = 0x12F, // Percent chance (modId = 303)
+    MOD_TRICK_ATK_AGI             = 0x208, // % AGI boost to Trick Attack (if gear mod, needs to be equipped on hit) (modId = 520)
 
     // Paladin
     MOD_ABSORB_PHYSDMG_TO_MP      = 0x1AA, // Absorbs a percentage of physical damage taken to MP. (modId = 426)
@@ -369,6 +371,7 @@ enum MODIFIER
     // Ninja
     MOD_UTSUSEMI                  = 0x133, // Everyone's favorite --tracks shadows. (modId = 307)
     MOD_NINJA_TOOL                = 0x134, // Percent chance to not use a tool. (modId = 308)
+    MOD_NIN_NUKE_BONUS            = 0x20A, // magic attack bonus for NIN nukes (modId = 522)
 
     // Dragoon
     MOD_JUMP_TP_BONUS             = 0x169, // bonus tp player receives when using jump (must be divided by 10) (modId = 361)
@@ -566,11 +569,12 @@ enum MODIFIER
 
     MOD_SHIELDBLOCKRATE           = 0x206, // Affects shield block rate, percent based (modID = 518)
     MOD_DIA_DOT                   = 0x139, //Increases the DoT damage of Dia (modId = 313)
+    MOD_ENH_DRAIN_ASPIR           = 0x13B, // % damage boost to Drain and Aspir(modId = 315)
+    MOD_AUGMENTS_ABSORB           = 0x209, // Direct Absorb spell increase while Liberator is equipped (percentage based) (modId = 521)
+    MOD_AMMO_SWING                = 0x20B  // Extra swing rate w/ ammo (ie. Jailer weapons). Use gearsets, and does nothing for non-players. (modId = 523)
 
-    // MOD_SPARE = 0x13B, // (modId = 315)
-    // MOD_SPARE = 0x207, // (modId = 519)
-    // MOD_SPARE = 0x208, // (modId = 520)
-
+    // MOD_SPARE = 0x20C, // (modId = 524)
+    // MOD_SPARE = 0x20D, // (modId = 525)
 
 };
 
