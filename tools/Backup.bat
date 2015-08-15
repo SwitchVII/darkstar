@@ -10,7 +10,7 @@ mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_exp > "D:\Programs\DarkStar\Back
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_inventory > "D:\Programs\DarkStar\Backups\char_inventory.sql"
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_jobs > "D:\Programs\DarkStar\Backups\char_jobs.sql"
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_look > "D:\Programs\DarkStar\Backups\char_look.sql"
-mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_look > "D:\Programs\DarkStar\Backups\char_merits.sql"
+mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_merit > "D:\Programs\DarkStar\Backups\char_merits.sql"
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_pet > "D:\Programs\DarkStar\Backups\char_pet.sql"
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_pet_name > "D:\Programs\DarkStar\Backups\char_pet_name.sql"
 mysqldump.exe -e -uroot -pmySQL@dm1n dspdb char_points > "D:\Programs\DarkStar\Backups\char_points.sql"
