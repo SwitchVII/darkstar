@@ -155,7 +155,7 @@ INSERT INTO `abilities` VALUES ('110', 'ice_shot', '17', '40', '4', '60', '195',
 INSERT INTO `abilities` VALUES ('111', 'wind_shot', '17', '40', '4', '60', '195', '110', '0', '127', '18.0', '0', '0', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('112', 'earth_shot', '17', '40', '4', '60', '195', '110', '0', '128', '18.0', '0', '0', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('113', 'thunder_shot', '17', '40', '4', '60', '195', '110', '0', '129', '18.0', '0', '0', '0', '0', '0','TOAU');
-INSERT INTO `abilities` VALUES ('114', 'water_shot', '17', '40', '4', '60', '195', '0', '110', '130', '18.0', '0', '0', '0', '0', '0','TOAU');
+INSERT INTO `abilities` VALUES ('114', 'water_shot', '17', '40', '4', '60', '195', '110', '0', '130', '18.0', '0', '0', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('115', 'light_shot', '17', '40', '4', '60', '195', '0', '0', '123', '18.0', '0', '0', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('116', 'dark_shot', '17', '40', '4', '60', '195', '0', '0', '124', '18.0', '0', '0', '0', '0', '0','TOAU');
 INSERT INTO `abilities` VALUES ('117', 'random_deal', '17', '50', '1', '1200', '196', '0', '0', '131', '20.0', '1', '1', '300', '1414', '0','TOAU');
@@ -194,7 +194,7 @@ INSERT INTO `abilities` VALUES ('150', 'flashy_shot', '11', '75', '1', '600', '1
 INSERT INTO `abilities` VALUES ('151', 'shikikoyo', '12', '75', '2', '300', '136', '452', '0', '152', '20.0', '0', '1', '80', '2752', '1','TOAU');
 INSERT INTO `abilities` VALUES ('152', 'blade_bash', '12', '75', '4', '180', '137', '110', '0', '202', '4.4', '0', '0', '0', '2754', '1','TOAU');
 INSERT INTO `abilities` VALUES ('153', 'deep_breathing', '14', '75', '1', '300', '164', '0', '0', '153', '20.0', '0', '0', '0', '2880', '1','TOAU');
-INSERT INTO `abilities` VALUES ('154', 'angon', '14', '75', '4', '180', '165', '0', '0', '245', '20.0', '0', '0', '0', '2882', '1','TOAU');
+INSERT INTO `abilities` VALUES ('154', 'angon', '14', '75', '4', '180', '165', '127', '0', '245', '20.0', '0', '0', '0', '2882', '1','TOAU');
 INSERT INTO `abilities` VALUES ('155', 'sange', '13', '75', '1', '300', '145', '0', '0', '200', '20.0', '0', '1', '0', '2816', '1','TOAU');
 INSERT INTO `abilities` VALUES ('156', 'blood_pact_ward', '15', '1', '1', '60', '174', '0', '0', '0', '20.0', '0', '0', '0', '0', '0',null); -- ROTZ Not really RotZ, but it will otherwise shut off abilities that were since it used to be one category
 INSERT INTO `abilities` VALUES ('157', 'hasso', '12', '25', '1', '60', '138', '0', '0', '163', '20.0', '0', '1', '300', '0', '0','TOAU');
@@ -312,6 +312,7 @@ INSERT INTO `abilities` VALUES ('363', 'Ward', '22', '1', '1', '0', '0', '0', '0
 INSERT INTO `abilities` VALUES ('364', 'Effusion', '22', '1', '1', '0', '0', '0', '0', '0', '20.0', '0', '1', '300', '0', '0',null);
 
 INSERT INTO `abilities` VALUES ('367', 'Vivacious_pulse', '22', '1', '1', '300', '0', '0', '0', '327', '20.0', '0', '1', '300', '0', '0',null);
+INSERT INTO `abilities` VALUES ('369', 'apogee', '15', '70', '1', '180', '108', '0', '0', '333', '20.0', '0', '1', '0', '0', '0',null);
 
 -- run
 

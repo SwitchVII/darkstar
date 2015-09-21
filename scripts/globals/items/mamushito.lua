@@ -20,4 +20,3 @@ function onAdditionalEffect(player,target,damage)
         return SUBEFFECT_STUN, MSGBASIC_ADD_EFFECT_STATUS, EFFECT_STUN;
     end
 end;
-

@@ -8,8 +8,8 @@
 --16924675', 'Promathia V1', '936', '521', '-0.500', '517
 --16924676', 'Promathia V2', '11135', '521', '-0.499', '517
 --instance 3
---16924677', 'Promathia V1', '936', '-519', '120', '-520
---16924678', 'Promathia V2', '11135', '-519', '120', '-520
+--16924676', 'Promathia V1', '936', '-519', '120', '-520
+--16924676', 'Promathia V2', '11135', '-519', '120', '-520
 -----------------------------------
 package.loaded["scripts/zones/Empyreal_Paradox/TextIDs"] = nil;
 -----------------------------------
@@ -78,12 +78,13 @@ end;
 function onEventFinish(player,csid,option)
   if (csid== 0x0006) then
     player:setPos(539,0,-593,192);	
-	player:addTitle(AVERTER_OF_THE_APOCALYPSE);
-	player:startEvent(0x0003);
-	  if (player:getCurrentMission(COP) == DAWN and player:getVar("PromathiaStatus")==2) then
-	   player:addKeyItem(TEAR_OF_ALTANA);
-       player:setVar("Promathia_kill_day",tonumber(os.date("%j")));	   
-	   player:setVar("PromathiaStatus",3);
-	 end
+    player:addTitle(AVERTER_OF_THE_APOCALYPSE);
+    player:startEvent(0x0003);
+    if (player:getCurrentMission(COP) == DAWN and player:getVar("PromathiaStatus")==2) then
+        player:addKeyItem(TEAR_OF_ALTANA);
+        player:messageSpecial(KEYITEM_OBTAINED,TEAR_OF_ALTANA);
+        player:setVar("Promathia_kill_day",tonumber(os.date("%j")));	   
+	player:setVar("PromathiaStatus",3);
+    end
   end
 end;

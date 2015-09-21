@@ -23,6 +23,11 @@ CREATE TABLE IF NOT EXISTS `item_latents` (
 
 -- INSERT INTO `item_latents` VALUES(itemID, modId, modValue, latentId, latentParam);
 
+-- -------------------------------------------------------
+-- Oneiros Ring
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(11671, 302, 2, 55, 100); -- Triple Attack +2% when mp is greater than or equal to 100
+
 INSERT INTO `item_latents` VALUES(13178, 8, 4, 25, 0); -- Auditory Torque, STR+4 song/roll active
 INSERT INTO `item_latents` VALUES(13178, 10, 4, 25, 0); -- Auditory Torque, VIT+4 song/roll active
 INSERT INTO `item_latents` VALUES(17365, 8, 4, 25, 0); -- Frenzy Fife, STR+4 song/roll active
@@ -2695,6 +2700,12 @@ INSERT INTO `item_latents` VALUES(17814, 23, 10, 52, 6); -- Attack +10 in Thunde
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (14166, 169, 12, 52, 2); -- movement speed +12% in Earth weather
 INSERT INTO `item_latents` VALUES (14167, 169, 12, 52, 2); -- Desert Boots +1
+
+-- -------------------------------------------------------
+-- Marabout Sandals
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(15760, 5, 15, 28, 0); -- Firesday: MP +15
+INSERT INTO `item_latents` VALUES(15760, 28, 4, 28, 0); -- Firesday: MATT +4
 
 -- -------------------------------------------------------
 -- Monsoon equips
