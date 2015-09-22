@@ -17,11 +17,11 @@ require("scripts/globals/common");
 
 -- Enable Extension (1= yes 0= no)
 ENABLE_COP     = 1;
-ENABLE_TOAU    = 0;
-ENABLE_WOTG    = 0;
-ENABLE_ACP     = 0;
-ENABLE_AMK     = 0;
-ENABLE_ASA     = 0;
+ENABLE_TOAU    = 1;
+ENABLE_WOTG    = 1;
+ENABLE_ACP     = 1;
+ENABLE_AMK     = 1;
+ENABLE_ASA     = 1;
 ENABLE_ABYSSEA = 0;
 ENABLE_SOA     = 0;
 
@@ -29,7 +29,7 @@ ENABLE_SOA     = 0;
 -- This generally results in a more accurate presentation of your selected expansions
 -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded)
 -- This feature correlates to the required_expansion column in the SQL files
-RESTRICT_BY_EXPANSION = 1;
+RESTRICT_BY_EXPANSION = 0;
 
 -- CHARACTER CONFIG
 INITIAL_LEVEL_CAP = 50; -- The initial level cap for new players.  There seems to be a hardcap of 255.
@@ -61,7 +61,7 @@ DRAIN_POWER = 1.000; -- Multiplies amount drained by Drain, Aspir, and relevant 
 ITEM_POWER  = 1.000; -- Multiplies the effect of items such as Potions and Ethers.
 WEAPON_SKILL_POWER  = 1.000; -- Multiplies damage dealt by Weapon Skills.
 WEAPON_SKILL_POINTS = 4.000; -- Multiplies points earned during weapon unlocking.
-USE_ADOULIN_WEAPON_SKILL_CHANGES = false; -- true/false. Change to toggle new Adoulin weapon skill damage calculations
+USE_ADOULIN_WEAPON_SKILL_CHANGES = true; -- true/false. Change to toggle new Adoulin weapon skill damage calculations
 
 HARVESTING_BREAK_CHANCE = 0.33; -- % chance for the sickle to break during harvesting.  Set between 0 and 1.
 EXCAVATION_BREAK_CHANCE = 0.33; -- % chance for the pickaxe to break during excavation.  Set between 0 and 1.
@@ -91,7 +91,7 @@ LandKingSystem_HQ = 2;
      CURRENCY_EXCHANGE_RATE = 10;      -- X Tier 1 ancient currency -> 1 Tier 2, and so on.  Certain values may conflict with shop items.  Not designed to exceed 198.
 RELIC_2ND_UPGRADE_WAIT_TIME = 604800;      -- wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 604800s = 1 RL week.
 RELIC_3RD_UPGRADE_WAIT_TIME = 295200;      -- wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 295200s = 82 hours.
-FREE_COP_DYNAMIS = 0 ; -- Authorize player to entering inside COP Dynamis without completing COP mission ( 1 = enable 0= disable)
+FREE_COP_DYNAMIS = 1 ; -- Authorize player to entering inside COP Dynamis without completing COP mission ( 1 = enable 0= disable)
 
 -- QUEST/MISSION SPECIFIC SETTINGS
 WSNM_LEVEL = 70; -- Min Level to get WSNM Quests
@@ -152,7 +152,7 @@ HALLOWEEN_YEAR_ROUND = 0; -- Set to 1 to have Harvest Festival initialize outsid
 HOMEPOINT_HEAL = 0; --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.
 RIVERNE_PORTERS = 120; -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.
 LANTERNS_STAY_LIT = 1200; -- time in seconds that lanterns in the Den of Rancor stay lit.
-ENABLE_COP_ZONE_CAP = 1; -- enable or disable lvl cap
+ENABLE_COP_ZONE_CAP = 0; -- enable or disable lvl cap
 TIMEZONE_OFFSET = 9.0; -- Offset from UTC used to determine when "JP Midnight" is for the server.  Default is JST (+9.0).
 ALLOW_MULTIPLE_EXP_RINGS = 0; -- Set to 1 to remove ownership restrictions on the Chariot/Empress/Emperor Band trio.
 BYPASS_EXP_RING_ONE_PER_WEEK = 0; -- -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
