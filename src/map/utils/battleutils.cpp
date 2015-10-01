@@ -221,13 +221,11 @@ namespace battleutils
                 int16 skillListId = Sql_GetIntData(SqlHandle, 0);
 
                 uint16 skillId = Sql_GetIntData(SqlHandle, 1);
-                CMobSkill* PMobSkill = g_PMobSkillList[skillId];
 
                 // ensure mobskill actually exists
-                if(PMobSkill == nullptr)
+                if (!battleutils::GetMobSkill(skillId))
                 {
-                    // Comment this out for now so error log doesn't spam
-                    // ShowError("battleutils::LoadMobSkillsList Mob skill (%d) is undefined for list (%d)\n", skillId, skillListId);
+                    ShowError("battleutils::LoadMobSkillsList Mob skill (%d) does not exist but was added to list (%d)\n", skillId, skillListId);
                 }
                 else
                 {
@@ -400,9 +398,34 @@ namespace battleutils
     *	get mobs 2 hour skills	(should be moved into mobskill.cpp)         *
     *                                                                       *
     ************************************************************************/
-    CMobSkill* GetTwoHourMobSkill(JOBTYPE job)
+    CMobSkill* GetTwoHourMobSkill(JOBTYPE job, uint16 familyId)
     {
         uint16 id = 0;
+
+        if(familyId == 335)
+        {
+            // Maat has his own two hour animations
+            switch (job)
+            {
+                case JOB_WAR: id = 752; break;
+                case JOB_MNK: id = 753; break;
+                case JOB_WHM: id = 754; break;
+                case JOB_BLM: id = 755; break;
+                case JOB_RDM: id = 756; break;
+                case JOB_THF: id = 757; break;
+                case JOB_PLD: id = 758; break;
+                case JOB_DRK: id = 759; break;
+                case JOB_BST: id = 760; break;
+                case JOB_BRD: id = 762; break;
+                case JOB_RNG: id = 763; break;
+                case JOB_SAM: id = 764; break;
+                case JOB_NIN: id = 765; break;
+                case JOB_DRG: id = 766; break;
+                case JOB_SMN: id = 767; break;
+            }
+
+            return GetMobSkill(id);
+        }
 
         switch (job)
         {
@@ -416,11 +439,58 @@ namespace battleutils
             case JOB_DRK: id = 439; break;
             case JOB_BST: id = 484; break;
             case JOB_BRD: id = 440; break;
-            case JOB_RNG: id = 479; break;
+            case JOB_RNG:
+                          if(familyId == 270 || familyId == 360)
+                          {
+                              // Yagudo has it's own version
+                              id = 865;
+                          }
+                          else if(familyId == 169 || familyId == 358)
+                          {
+                              // Kindred has it's own version
+                              id = 895;
+                          }
+                          else if (familyId == 133 || familyId == 327)
+                          {
+                              // Goblin
+                              id = 479;
+                          }
+                          else if (familyId == 25)
+                          {
+                              // Antica
+                              id = 480;
+                          }
+                          else if (familyId == 189 || familyId == 334)
+                          {
+                              // Orc
+                              id = 481;
+                          }
+                          else if (familyId == 115 || familyId == 359 || familyId == 221
+                                  || familyId == 222 || familyId == 223)
+                          {
+                              // Fomor / Shadow
+                              id = 482;
+                          }
+                          else if (familyId == 328 || familyId >= 126 && familyId <= 130)
+                          {
+                              // Giga
+                              id = 483;
+                          }
+                          else if(familyId == 337 || familyId == 200 || familyId == 201
+                                  || familyId == 202)
+                          {
+                              // Quadav has it's own version
+                              id = 866;
+                          }
+                          else
+                          {
+                              id = 479;
+                          }
+                          break;
             case JOB_SAM: id = 474; break;
             case JOB_NIN: id = 475; break;
             case JOB_DRG: id = 476; break;
-                // case JOB_SMN: id = 478; break;  // alt 2000
+            case JOB_SMN: id = 2000; break;  // alt 2000
                 // case JOB_BLU: id = 1933; break; // alt 2001
                 // case JOB_COR: id = 1934; break; // alt 2002
                 // case JOB_PUP: id = 1935; break; // alt 2003
@@ -935,8 +1005,8 @@ namespace battleutils
             if ((PDefender->m_EcoSystem != SYSTEM_UNDEAD) || (daze == EFFECT_HASTE_DAZE))
             {
                 PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(daze,
-                                                                                    0, power,
-                                                                                    0, 10, PAttacker->id), true);
+                    0, power,
+                    0, 10, PAttacker->id), true);
             }
         }
 
@@ -1016,7 +1086,7 @@ namespace battleutils
         }
         //check weapon for additional effects
         else if (PAttacker->objtype == TYPE_PC && weapon->getModifier(MOD_ADDITIONAL_EFFECT) > 0 && PAttacker->GetMLevel() >= weapon->getReqLvl() &&
-                 luautils::OnAdditionalEffect(PAttacker, PDefender, weapon, Action, finaldamage) == 0 && Action->additionalEffect)
+            luautils::OnAdditionalEffect(PAttacker, PDefender, weapon, Action, finaldamage) == 0 && Action->additionalEffect)
         {
             if (Action->addEffectMessage == 163 && Action->addEffectParam < 0)
             {
@@ -1561,7 +1631,7 @@ namespace battleutils
             if (cap == 0)
             {
                 cap = GetMaxSkill((SKILLTYPE)PChar->PBattleAI->GetCurrentSpell()->getSkillType(), PChar->GetSJob(),
-                                  PChar->GetSLevel()); // << this might be GetMLevel, however this leaves no chance of avoiding interuption
+                    PChar->GetSLevel()); // << this might be GetMLevel, however this leaves no chance of avoiding interuption
             }
 
             if (skill > cap)
@@ -1667,7 +1737,7 @@ namespace battleutils
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
         if ((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 &&
-             PWeapon->getSkillType() != SKILL_H2H) && battleutils::IsEngauged(PDefender))
+            PWeapon->getSkillType() != SKILL_H2H) && battleutils::IsEngauged(PDefender))
         {
             JOBTYPE job = PDefender->GetMJob();
 
@@ -1834,7 +1904,7 @@ namespace battleutils
                         // Subpower is the remaining damage that can be reflected. When it reaches 0 the effect ends
                         // Set Reprisal spike damage
                         PDefender->setModifier(MOD_SPIKES_DMG, dsp_cap((int32)(blockedDamage * (reprisalEffect->GetPower())) / 100,
-                                                                       0, reprisalEffect->GetSubPower()));
+                            0, reprisalEffect->GetSubPower()));
                     }
                 }
 
@@ -2104,7 +2174,7 @@ namespace battleutils
         int32 hitrate = 75;
 
         if (PAttacker->objtype == TYPE_PC && ((PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) && (abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23 || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))) ||
-                                              (charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_ASSASSIN) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK) && battleutils::getAvailableTrickAttackChar(PAttacker, PDefender))))
+            (charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_ASSASSIN) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK) && battleutils::getAvailableTrickAttackChar(PAttacker, PDefender))))
         {
             hitrate = 100; //attack with SA active or TA/Assassin cannot miss
         }
@@ -2167,7 +2237,7 @@ namespace battleutils
             }
         }
         else if (PAttacker->objtype == TYPE_PC && PAttacker->GetMJob() == JOB_THF && charutils::hasTrait((CCharEntity*)PAttacker, TRAIT_ASSASSIN) && (!ignoreSneakTrickAttack) &&
-                 PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
+            PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
         {
             CBattleEntity* taChar = battleutils::getAvailableTrickAttackChar(PAttacker, PDefender);
             if (taChar != nullptr) crithitrate = 100;
@@ -2932,7 +3002,7 @@ namespace battleutils
             if (skillchain != SC_NONE)
             {
                 PSCEffect->SetStartTime(gettick());
-             //   ShowDebug("duration: %d", PSCEffect->GetDuration());
+                //   ShowDebug("duration: %d", PSCEffect->GetDuration());
                 PSCEffect->SetDuration(PSCEffect->GetDuration() - 1000);
                 PSCEffect->SetTier(GetSkillchainTier((SKILLCHAIN_ELEMENT)skillchain));
                 PSCEffect->SetPower(skillchain);
@@ -3181,9 +3251,9 @@ namespace battleutils
         //            TODO:     × (1 + Staff Affinity)
 
         int32 damage = floor((double)(abs(lastSkillDamage))
-                             * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000
-                             * (100 + PAttacker->getMod(MOD_SKILLCHAINBONUS)) / 100
-                             * (100 + PAttacker->getMod(MOD_SKILLCHAINDMG)) / 100);
+            * g_SkillChainDamageModifiers[chainLevel][chainCount] / 1000
+            * (100 + PAttacker->getMod(MOD_SKILLCHAINBONUS)) / 100
+            * (100 + PAttacker->getMod(MOD_SKILLCHAINDMG)) / 100);
 
         damage = damage * (1000 - resistance) / 1000;
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
@@ -3289,9 +3359,9 @@ namespace battleutils
         DSP_DEBUG_BREAK_IF(PEntity == nullptr);
 
         return (PEntity->animation == ANIMATION_ATTACK &&
-                PEntity->PBattleAI != nullptr &&
-                PEntity->PBattleAI->GetBattleTarget() != nullptr &&
-                PEntity->status != STATUS_DISAPPEAR);
+            PEntity->PBattleAI != nullptr &&
+            PEntity->PBattleAI->GetBattleTarget() != nullptr &&
+            PEntity->status != STATUS_DISAPPEAR);
     }
 
     /************************************************************************
@@ -4228,7 +4298,7 @@ namespace battleutils
             dsprand::GetRandomNumber(100) < PDefender->getMod(MOD_MAGIC_ABSORB))
             damage = -damage;
         else if ((element && dsprand::GetRandomNumber(100) < PDefender->getMod(nullarray[element - 1])) ||
-                 dsprand::GetRandomNumber(100) < PDefender->getMod(MOD_MAGIC_NULL))
+            dsprand::GetRandomNumber(100) < PDefender->getMod(MOD_MAGIC_NULL))
             damage = 0;
         else
         {
@@ -4521,8 +4591,8 @@ namespace battleutils
     {
         if (PSpell->getAOE() == SPELLAOE_RADIAL_ACCE) // Divine Veil goes here because -na spells have AoE w/ Accession
             if (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_ACCESSION) || (PCaster->objtype == TYPE_PC &&
-            charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
-            (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(MOD_AOE_NA) == 1)))
+                charutils::hasTrait((CCharEntity*)PCaster, TRAIT_DIVINE_VEIL) && PSpell->isNa() &&
+                (PCaster->StatusEffectContainer->HasStatusEffect(EFFECT_DIVINE_SEAL) || PCaster->getMod(MOD_AOE_NA) == 1)))
                 return SPELLAOE_RADIAL;
             else
                 return SPELLAOE_NONE;
@@ -4684,7 +4754,7 @@ namespace battleutils
         position_t nearEntity = nearPosition(*pos, offset, M_PI);
 
         // validate the drawin position before continuing
-        if(!PMob->PBattleAI->m_PPathFind->ValidPosition(pos))
+        if (!PMob->PBattleAI->m_PPathFind->ValidPosition(pos))
         {
             return false;
         }
@@ -4951,6 +5021,34 @@ namespace battleutils
                 }
             }
         }
+    }
+
+    bool HasClaim(CBattleEntity* PEntity, CBattleEntity* PTarget)
+    {
+        DSP_DEBUG_BREAK_IF(PTarget == nullptr);
+        CBattleEntity* PMaster = PEntity;
+
+        if (PEntity->PMaster != nullptr)
+        {
+            PMaster = PEntity->PMaster;
+        }
+
+        if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == PMaster->id || PTarget->objtype == TYPE_PC ||
+                PTarget->objtype == TYPE_PET)
+        {
+            return true;
+        }
+
+        bool found = false;
+
+        PMaster->ForAlliance([&PTarget, &found](CBattleEntity* PChar){
+                if (PChar->id == PTarget->m_OwnerID.id)
+                {
+                    found = true;
+                }
+                });
+
+        return found;
     }
 
 };

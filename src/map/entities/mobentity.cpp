@@ -68,7 +68,6 @@ CMobEntity::CMobEntity()
     m_RageMode = 0;
 
     strRank = 3;
-    defRank = 3;
     vitRank = 3;
     agiRank = 3;
     intRank = 3;
@@ -90,7 +89,6 @@ CMobEntity::CMobEntity()
     m_bcnmID = 0;
 
     m_maxRoamDistance = 10.0f;
-    m_roamDistance = 5.0f;
     m_disableScent = false;
 
     setMobMod(MOBMOD_SIGHT_RANGE, MOB_SIGHT_RANGE);
@@ -177,19 +175,14 @@ uint32 CMobEntity::GetRandomGil()
     // randomize it
     gil += dsprand::GetRandomNumber(highGil);
 
-    // NMs get more gil
-    if((m_Type & MOBTYPE_NOTORIOUS) == MOBTYPE_NOTORIOUS){
-        gil *= 10;
-    }
-
-    // thfs drop more gil
-    if(GetMJob() == JOB_THF){
-        gil = (float)gil * 1.5;
-    }
-
     if(min && gil < min)
     {
         gil = min;
+    }
+
+    if (getMobMod(MOBMOD_GIL_BONUS) != 0)
+    {
+        gil = (float)gil * (getMobMod(MOBMOD_GIL_BONUS) / 10.0f);
     }
 
     return gil;
@@ -203,6 +196,11 @@ bool CMobEntity::CanDropGil()
     if(getMobMod(MOBMOD_GIL_MIN) > 0 || getMobMod(MOBMOD_GIL_MAX))
     {
         return true;
+    }
+
+    if(getMobMod(MOBMOD_GIL_BONUS) > 0)
+    {
+            return true;
     }
 
     return m_EcoSystem == SYSTEM_BEASTMEN;
@@ -303,48 +301,6 @@ bool CMobEntity::IsFarFromHome()
 bool CMobEntity::CanBeNeutral()
 {
     return !(m_Type & MOBTYPE_NOTORIOUS);
-}
-
-void CMobEntity::ChangeMJob(uint16 job)
-{
-    this->SetMJob(job);
-
-    // give him a spell list based on job
-    if(m_EcoSystem == SYSTEM_BEASTMEN || m_EcoSystem == SYSTEM_UNDEAD || m_EcoSystem == SYSTEM_HUMANOID){
-        uint16 spellList = 0;
-
-        switch(job){
-            case JOB_WHM:
-                spellList = 1;
-            break;
-            case JOB_BLM:
-                spellList = 2;
-            break;
-            case JOB_RDM:
-                spellList = 3;
-            break;
-            case JOB_PLD:
-                spellList = 4;
-            break;
-            case JOB_DRK:
-                spellList = 5;
-            break;
-            case JOB_BRD:
-                spellList = 6;
-            break;
-            case JOB_NIN:
-                spellList = 7;
-            break;
-            case JOB_BLU:
-                spellList = 8;
-            break;
-        }
-
-        m_SpellListContainer = mobSpellList::GetMobSpellList(spellList);
-    }
-
-    // give spells and proper traits
-    mobutils::CalculateStats(this);
 }
 
 uint8 CMobEntity::TPUseChance()
@@ -524,4 +480,14 @@ void CMobEntity::UpdateEntity()
         loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
         updatemask = 0;
     }
+}
+
+float CMobEntity::GetRoamDistance()
+{
+    return (float)getMobMod(MOBMOD_ROAM_DISTANCE) / 10.0f;
+}
+
+float CMobEntity::GetRoamRate()
+{
+    return (float)getMobMod(MOBMOD_ROAM_RATE) / 10.0f;
 }

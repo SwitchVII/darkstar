@@ -26,7 +26,7 @@ CREATE TABLE `mob_pool_mods` (
   `poolid` smallint(5) unsigned NOT NULL,
   `modid` smallint(5) unsigned NOT NULL,
   `value` smallint(5) NOT NULL DEFAULT '0',
-  `type` smallint(5) NOT NULL DEFAULT '0',
+  `is_mob_mod` boolean NOT NULL DEFAULT '0',
   PRIMARY KEY (`poolid`,`modid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -238,6 +238,26 @@ INSERT INTO `mob_pool_mods` VALUES (2827,14,708,1);
 INSERT INTO `mob_pool_mods` VALUES (3202,14,708,1);
 INSERT INTO `mob_pool_mods` VALUES (3204,14,708,1);
 INSERT INTO `mob_pool_mods` VALUES (3483,14,708,1);
+
+INSERT INTO `mob_pool_mods` VALUES (4186,34,20,1);
+INSERT INTO `mob_pool_mods` VALUES (4186,35,0,1);
+INSERT INTO `mob_pool_mods` VALUES (4186,244,15,0);
+
+INSERT INTO `mob_pool_mods` VALUES (4187,34,20,1);
+INSERT INTO `mob_pool_mods` VALUES (4187,35,0,1);
+INSERT INTO `mob_pool_mods` VALUES (4187,244,15,0);
+
+INSERT INTO `mob_pool_mods` VALUES (4188,34,20,1);
+INSERT INTO `mob_pool_mods` VALUES (4188,35,0,1);
+INSERT INTO `mob_pool_mods` VALUES (4188,244,15,0);
+
+INSERT INTO `mob_pool_mods` VALUES (4189,34,20,1);
+INSERT INTO `mob_pool_mods` VALUES (4189,35,0,1);
+INSERT INTO `mob_pool_mods` VALUES (4189,244,15,0);
+
+INSERT INTO `mob_pool_mods` VALUES (2032,34,20,1);
+INSERT INTO `mob_pool_mods` VALUES (2032,35,0,1);
+INSERT INTO `mob_pool_mods` VALUES (2032,244,15,0);
 
 /*!40000 ALTER TABLE `mob_pool_mods` ENABLE KEYS */;
 UNLOCK TABLES;
