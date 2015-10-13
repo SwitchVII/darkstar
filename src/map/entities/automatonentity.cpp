@@ -73,6 +73,7 @@ bool CAutomatonEntity::hasAttachment(uint8 attachment)
             return true;
         }
     }
+    return false;
 }
 
 void CAutomatonEntity::setElementMax(uint8 element, uint8 max)
@@ -133,7 +134,7 @@ void CAutomatonEntity::UpdateEntity()
         }
         loc.zone->PushPacket(this, CHAR_INRANGE, new CEntityUpdatePacket(this, ENTITY_UPDATE, updatemask));
         updatemask = 0;
-        if (PMaster->objtype == TYPE_PC)
+        if (PMaster && PMaster->objtype == TYPE_PC)
         {
             ((CCharEntity*)PMaster)->pushPacket(new CCharJobExtraPacket((CCharEntity*)PMaster, PMaster->GetMJob() == JOB_PUP));
         }

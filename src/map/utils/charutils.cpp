@@ -385,8 +385,8 @@ namespace charutils
             length = 0;
             int8* spells = nullptr;
             Sql_GetData(SqlHandle, 16, &spells, &length);
-            memcpy(PChar->m_SpellList, spells, (length > sizeof(PChar->m_SpellList) ? sizeof(PChar->m_SpellList) : length));
-            memcpy(PChar->m_EnabledSpellList, spells, (length > sizeof(PChar->m_EnabledSpellList) ? sizeof(PChar->m_EnabledSpellList) : length));
+            memcpy(PChar->m_SpellList.data(), spells, (length > sizeof(PChar->m_SpellList) ? sizeof(PChar->m_SpellList) : length));
+            memcpy(PChar->m_EnabledSpellList.data(), spells, (length > sizeof(PChar->m_EnabledSpellList) ? sizeof(PChar->m_EnabledSpellList) : length));
             filterEnabledSpells(PChar);
 
             length = 0;
@@ -2662,28 +2662,37 @@ namespace charutils
 
     int32 hasSpell(CCharEntity* PChar, uint16 SpellID)
     {
-        return hasBit(SpellID, PChar->m_EnabledSpellList, sizeof(PChar->m_EnabledSpellList));
+        return PChar->m_EnabledSpellList[SpellID];
     }
 
     int32 addSpell(CCharEntity* PChar, uint16 SpellID)
     {
-        addBit(SpellID, PChar->m_SpellList, sizeof(PChar->m_SpellList));
-        return addBit(SpellID, PChar->m_EnabledSpellList, sizeof(PChar->m_EnabledSpellList));
+        if (!hasSpell(PChar, SpellID)) {
+            PChar->m_EnabledSpellList[SpellID] = true;
+            PChar->m_SpellList[SpellID] = true;
+            return 1;
+        }
+        return 0;
     }
 
     int32 delSpell(CCharEntity* PChar, uint16 SpellID)
     {
-        delBit(SpellID, PChar->m_SpellList, sizeof(PChar->m_SpellList));
-        return delBit(SpellID, PChar->m_EnabledSpellList, sizeof(PChar->m_EnabledSpellList));
+        if (hasSpell(PChar, SpellID)) {
+            PChar->m_SpellList[SpellID] = false;
+            PChar->m_EnabledSpellList[SpellID] = false;
+            return 1;
+        }
+        return 0;
     }
 
     void filterEnabledSpells(CCharEntity* PChar)
     {
-        for (int i = 0; i < MAX_SPELL_ID; i++)
+        //128 bytes, 1 bit per byte
+        for (int i = 0; i < 1024; ++i)
         {
             if (spell::GetSpell(i) == nullptr || luautils::IsExpansionEnabled(spell::GetSpell(i)->getExpansionCode()) == false)
             {
-                delBit(i, PChar->m_EnabledSpellList, sizeof(PChar->m_EnabledSpellList));
+                PChar->m_EnabledSpellList[i] = false;
             }
         }
     }
@@ -2975,12 +2984,16 @@ namespace charutils
                 }
             });
 
-            // distribute gil
-            uint32 gilPerPerson = gil / members.size();
-            for (auto PMember : members)
+            // all members might not be in range
+            if (members.size() > 0)
             {
-                UpdateItem(PMember, LOC_INVENTORY, 0, gilPerPerson);
-                PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, gilPerPerson, 0, 565));
+                // distribute gil
+                uint32 gilPerPerson = gil / members.size();
+                for (auto PMember : members)
+                {
+                    UpdateItem(PMember, LOC_INVENTORY, 0, gilPerPerson);
+                    PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, gilPerPerson, 0, 565));
+                }
             }
         }
         else if (distance(PChar->loc.p, PMob->loc.p) < 100)
@@ -3881,7 +3894,7 @@ namespace charutils
             "WHERE charid = %u;";
 
         int8 spells[sizeof(PChar->m_SpellList) * 2 + 1];
-        Sql_EscapeStringLen(SqlHandle, spells, (const int8*)PChar->m_SpellList, sizeof(PChar->m_SpellList));
+        Sql_EscapeStringLen(SqlHandle, spells, (const int8*)PChar->m_SpellList.data(), sizeof(PChar->m_SpellList));
 
         Sql_Query(SqlHandle, Query,
                   spells,
@@ -4145,6 +4158,7 @@ namespace charutils
             case JOB_SCH: fmtQuery = "UPDATE char_jobs SET unlocked = %u, sch = %u WHERE charid = %u LIMIT 1"; break;
             case JOB_GEO: fmtQuery = "UPDATE char_jobs SET unlocked = %u, geo = %u WHERE charid = %u LIMIT 1"; break;
             case JOB_RUN: fmtQuery = "UPDATE char_jobs SET unlocked = %u, run = %u WHERE charid = %u LIMIT 1"; break;
+            default: fmtQuery = ""; break;
         }
         Sql_Query(SqlHandle, fmtQuery, PChar->jobs.unlocked, PChar->jobs.job[job], PChar->id);
 
@@ -4193,6 +4207,7 @@ namespace charutils
             case JOB_SCH: Query = "UPDATE char_exp SET sch = %u, merits = %u, limits = %u WHERE charid = %u"; break;
             case JOB_GEO: Query = "UPDATE char_exp SET geo = %u, merits = %u, limits = %u WHERE charid = %u"; break;
             case JOB_RUN: Query = "UPDATE char_exp SET run = %u, merits = %u, limits = %u WHERE charid = %u"; break;
+            default: Query = ""; break;
         }
         Sql_Query(SqlHandle, Query,
                   PChar->jobs.exp[job],
@@ -4309,24 +4324,24 @@ namespace charutils
         uint16 reduction = PChar->getMod(MOD_PERPETUATION_REDUCTION);
 
         static const MODIFIER strong[8] = {
-            MOD_FIRE_AFFINITY,
-            MOD_EARTH_AFFINITY,
-            MOD_WATER_AFFINITY,
-            MOD_WIND_AFFINITY,
-            MOD_ICE_AFFINITY,
-            MOD_THUNDER_AFFINITY,
-            MOD_LIGHT_AFFINITY,
-            MOD_DARK_AFFINITY };
+            MOD_FIRE_AFFINITY_PERP,
+            MOD_EARTH_AFFINITY_PERP,
+            MOD_WATER_AFFINITY_PERP,
+            MOD_WIND_AFFINITY_PERP,
+            MOD_ICE_AFFINITY_PERP,
+            MOD_THUNDER_AFFINITY_PERP,
+            MOD_LIGHT_AFFINITY_PERP,
+            MOD_DARK_AFFINITY_PERP };
 
         static const MODIFIER weak[8] = {
-            MOD_WATER_AFFINITY,
-            MOD_WIND_AFFINITY,
-            MOD_THUNDER_AFFINITY,
-            MOD_ICE_AFFINITY,
-            MOD_FIRE_AFFINITY,
-            MOD_EARTH_AFFINITY,
-            MOD_DARK_AFFINITY,
-            MOD_LIGHT_AFFINITY };
+            MOD_WATER_AFFINITY_PERP,
+            MOD_WIND_AFFINITY_PERP,
+            MOD_THUNDER_AFFINITY_PERP,
+            MOD_ICE_AFFINITY_PERP,
+            MOD_FIRE_AFFINITY_PERP,
+            MOD_EARTH_AFFINITY_PERP,
+            MOD_DARK_AFFINITY_PERP,
+            MOD_LIGHT_AFFINITY_PERP };
 
         static const WEATHER weatherStrong[8] = {
             WEATHER_HOT_SPELL,
@@ -4342,23 +4357,7 @@ namespace charutils
 
         DSP_DEBUG_BREAK_IF(element > 7);
 
-        int16 affinity = PChar->getMod(strong[element]) - PChar->getMod(weak[element]);
-
-        // TODO: don't use ItemIDs in CORE. it must be MOD
-
-        CItemWeapon* mainHand = (CItemWeapon*)PChar->getEquip(SLOT_MAIN);
-
-        if (mainHand && mainHand->getID() == 18632)
-            affinity = affinity + 1;
-        else if (mainHand && mainHand->getID() == 18633)
-            affinity = affinity + 2;
-
-        //-----------------------------------------------
-
-        if (affinity > 0)
-            reduction = reduction + affinity + 1;
-        else if (affinity < 0)
-            reduction = reduction - affinity - 1;
+        reduction = reduction + PChar->getMod(strong[element]) - PChar->getMod(weak[element]) + PChar->getMod(MOD_ALL_AFFINITY_PERP);
 
         if (CVanaTime::getInstance()->getWeekday() == element)
             reduction = reduction + PChar->getMod(MOD_DAY_REDUCTION);
